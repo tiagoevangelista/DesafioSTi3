@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DesafioSti3.Application\DesafioSti3.Application.csproj" />
+    <ProjectReference Include="..\DesafioSti3.Infrastructure\DesafioSti3.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
