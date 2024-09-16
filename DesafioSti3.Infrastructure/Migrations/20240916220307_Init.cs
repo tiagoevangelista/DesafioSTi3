@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DesafioSti3.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,8 +45,8 @@ namespace DesafioSti3.Infrastructure.Migrations
                 {
                     Identificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataVenda = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ValorFinal = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    ClienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ClienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ValorFinal = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,7 +64,7 @@ namespace DesafioSti3.Infrastructure.Migrations
                 {
                     PedidoIdentificador = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProdutoId = table.Column<int>(type: "int", nullable: false),
-                    Quantidade = table.Column<int>(type: "int", nullable: false),
+                    Quantidade = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     PrecoUnitario = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false)
                 },
                 constraints: table =>
@@ -80,7 +80,8 @@ namespace DesafioSti3.Infrastructure.Migrations
                         name: "FK_ItensPedido_Produtos_ProdutoId",
                         column: x => x.ProdutoId,
                         principalTable: "Produtos",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

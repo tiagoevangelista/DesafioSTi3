@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DesafioSTi3.Domain.Entities
@@ -14,6 +15,7 @@ namespace DesafioSTi3.Domain.Entities
         public string CPF { get; set; }
         public CategoriaCliente Categoria { get; set; }
 
+        [JsonIgnore]
         public ICollection<Pedido> Pedidos { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DesafioSTi3.Domain.Entities;
+﻿using DesafioSti3.Application.DTOs.Consulta;
+using DesafioSTi3.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

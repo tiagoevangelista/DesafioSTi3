@@ -1,4 +1,7 @@
-﻿using DesafioSti3.Application.Services;
+﻿using DesafioSti3.Application.DTOs;
+using DesafioSti3.Application.DTOs.Consulta;
+using DesafioSti3.Application.DTOs.Criacao;
+using DesafioSti3.Application.Services;
 using DesafioSti3.Infrastructure.Services;
 using DesafioSTi3.Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -6,56 +9,88 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DesafioSTi3.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
-    public class PedidosController : ControllerBase
+    public class PedidosController(
+        IPedidoService _pedidoService,
+        IClienteService _clienteService,
+        IProdutoService _produtoService) : ControllerBase
     {
-        private readonly IPedidoService _pedidoService;
-
-        public PedidosController(IPedidoService pedidoService)
-        {
-            _pedidoService = pedidoService;
-        }
-
-        [HttpPost("CriarPedido")]
-        public async Task<IActionResult> CriarPedido(Pedido pedido)
-        {
-            if (pedido == null)
-                return BadRequest();
-
-            var resultado = await _pedidoService.ProcessarPedido(pedido);
-
-            return Ok(resultado);
-        }
 
         [HttpGet("ListarPedidos")]
-        public async Task<ActionResult<List<Pedido>>> ListarPedidos()
+        public async Task<ActionResult<List<PedidoDto>>> ListarPedidos()
         {
-            var pedidos = await _pedidoService.ListarPedidos();
-
-            return Ok(pedidos);
+            var produtos = await _pedidoService.ListarPedidos();
+            return Ok(produtos);
         }
 
-        [HttpGet("BuscarPedidoPorId")]
-        public async Task<ActionResult<List<Pedido>>> BuscarPedidoPorId(Guid id)
+        [HttpGet("BuscarPedidoPorId/{id}")]
+        public async Task<ActionResult<PedidoDto>> BuscarPedidoPorId(Guid id)
         {
-            var pedidos = await _pedidoService.ListarPedidos();
+            var pedido = await _pedidoService.BuscarPedidoPorId(id);
 
-            return Ok(pedidos);
+            var listaItens = new List<ItemPedidoDto>();
+
+            foreach (var item in pedido.Itens)
+            {
+                var produtoAtual = await _produtoService.BuscarProdutoPorId(item.ProdutoId);
+                var pedidoItem = new ItemPedidoDto()
+                {
+                    ProdutoId = item.ProdutoId,
+                    Descricao = item.Produto.Descricao,
+                    Quantidade = item.Quantidade,
+                    PrecoUnitario = item.PrecoUnitario
+                };
+                listaItens.Add(pedidoItem);
+            }
+
+            var pedidoDto = new PedidoDto()
+            {
+                Identificador = pedido.Identificador,
+                DataVenda = pedido.DataVenda,
+                Cliente = pedido.Cliente,
+                Itens = listaItens
+            };
+
+            return Ok(pedidoDto);
         }
 
-        [HttpPut("AtualizarPedido")]
-        public async Task<ActionResult> AtualizarPedido(Pedido pedido)
+        [HttpPost("AdicionarPedido")]
+        public async Task<ActionResult<Pedido>> AdicionarPedido(PedidoCriacaoDto pedidoDto)
         {
-            await _pedidoService.AtualizarPedido(pedido);
-            return Ok(pedido);
+            var listaItens = new List<ItemPedido>();
+            
+            foreach (var item in pedidoDto.Itens)
+            {
+                var produtoAtual = await _produtoService.BuscarProdutoPorId(item.ProdutoId);
+                var pedidoItem = new ItemPedido()
+                {
+                    ProdutoId = item.ProdutoId,
+                    Produto = produtoAtual,
+                    Quantidade = item.Quantidade,
+                    PrecoUnitario = item.PrecoUnitario,
+                };
+                listaItens.Add(pedidoItem); 
+            }
+
+            var pedido = new Pedido()
+            {
+                DataVenda = DateTime.UtcNow.ToLocalTime(),
+                Cliente = await _clienteService.BuscarClientePorId(pedidoDto.Cliente.Id),
+                Itens = listaItens,
+                ValorFinal = pedidoDto.Itens.Sum(item => item.PrecoUnitario * item.Quantidade),
+            };
+
+            await _pedidoService.ProcessarPedido(pedido);
+
+            return Ok(pedidoDto);
         }
 
-        [HttpDelete("ExcluirPedido")]
-        public async Task<ActionResult> ExcluirPedido(Guid id)
+        [HttpPost("ProcessarPedido")]
+        public async Task<ActionResult> ProcessarPedido()
         {
-            await _pedidoService.RemoverPedido(id);
-            return Ok();
+            // TODO - Vou fazer depois de concluir todos os outros redondinho
+            return BadRequest();
         }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DesafioSti3.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240915234755_Initial")]
-    partial class Initial
+    [Migration("20240916220307_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,8 +60,9 @@ namespace DesafioSti3.Infrastructure.Migrations
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Quantidade")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("PedidoIdentificador", "ProdutoId");
 
@@ -123,9 +124,9 @@ namespace DesafioSti3.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("DesafioSTi3.Domain.Entities.Produto", "Produto")
-                        .WithMany("ItensPedido")
+                        .WithMany()
                         .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Pedido");
@@ -152,11 +153,6 @@ namespace DesafioSti3.Infrastructure.Migrations
             modelBuilder.Entity("DesafioSTi3.Domain.Entities.Pedido", b =>
                 {
                     b.Navigation("Itens");
-                });
-
-            modelBuilder.Entity("DesafioSTi3.Domain.Entities.Produto", b =>
-                {
-                    b.Navigation("ItensPedido");
                 });
 #pragma warning restore 612, 618
         }

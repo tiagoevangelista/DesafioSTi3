@@ -51,16 +51,17 @@ namespace DesafioSti3.Infrastructure
                 entity.HasKey(e => new { e.PedidoIdentificador, e.ProdutoId });
 
                 entity.Property(e => e.PrecoUnitario).HasPrecision(10, 2);
+                entity.Property(e => e.Quantidade).HasPrecision(10, 2);
 
                 entity.HasOne(e => e.Pedido)
                     .WithMany(e => e.Itens)
                     .HasForeignKey(e => e.PedidoIdentificador)
                     .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne<Produto>(e => e.Produto)
-                    .WithMany(e => e.ItensPedido)
-                    .HasForeignKey(e => e.ProdutoId)
-                    .OnDelete(DeleteBehavior.NoAction);
+                //entity.HasOne<Produto>(e => e.Produto)
+                //    .WithMany(e => e.ItensPedido)
+                //    .HasForeignKey(e => e.ProdutoId)
+                //    .OnDelete(DeleteBehavior.NoAction);
             });
 
         }

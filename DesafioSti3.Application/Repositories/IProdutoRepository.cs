@@ -1,4 +1,5 @@
-﻿using DesafioSTi3.Domain.Entities;
+﻿using DesafioSti3.Application.DTOs.Criacao;
+using DesafioSTi3.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace DesafioSti3.Application.Interfaces
     {
         Task<IEnumerable<Produto>> ListarProdutos();
         Task<Produto> BuscarProdutoPorId(int id);
-        Task<Produto> AdicionarProduto(Produto produto);
+        Task<Produto> AdicionarProduto(ProdutoCriacaoDto produto);
         Task AtualizarProduto(Produto produto);
         Task ExcluirProduto(int id);
     }

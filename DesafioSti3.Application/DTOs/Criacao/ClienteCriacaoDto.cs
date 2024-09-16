@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DesafioSti3.Application.DTOs
+namespace DesafioSti3.Application.DTOs.Criacao
 {
-    public class ClienteProcessamentoDto
+    public class ClienteCriacaoDto
     {
-        public Guid Id { get; set; }
         public string Nome { get; set; }
         public string CPF { get; set; }
         public CategoriaCliente Categoria { get; set; }

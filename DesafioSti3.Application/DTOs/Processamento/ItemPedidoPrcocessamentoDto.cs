@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DesafioSti3.Application.DTOs
+namespace DesafioSti3.Application.DTOs.Processamento
 {
     public class ItemPedidoPrcocessamentoDto
     {

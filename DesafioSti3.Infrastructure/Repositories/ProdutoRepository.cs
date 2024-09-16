@@ -1,4 +1,5 @@
-﻿using DesafioSti3.Application.Interfaces;
+﻿using DesafioSti3.Application.DTOs.Criacao;
+using DesafioSti3.Application.Interfaces;
 using DesafioSTi3.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,12 +30,18 @@ namespace DesafioSti3.Infrastructure.Repositories
             return await _context.Produtos.FindAsync(id);
         }
 
-        public async Task<Produto> AdicionarProduto(Produto produto)
+        public async Task<Produto> AdicionarProduto(ProdutoCriacaoDto produto)
         {
-            _context.Produtos.Add(produto);
+            var produtoTratado = new Produto()
+            {
+                Descricao = produto.Descricao,
+                Preco = produto.Preco,
+            };
+
+            _context.Produtos.Add(produtoTratado);
             await _context.SaveChangesAsync();
 
-            return produto;
+            return produtoTratado;
         }
 
         public async Task ExcluirProduto(int id)
@@ -49,7 +56,7 @@ namespace DesafioSti3.Infrastructure.Repositories
 
         public async Task<IEnumerable<Produto>> ListarProdutos()
         {
-            return await _context.Produtos.ToListAsync();
+            return await _context.Produtos.AsNoTracking().ToListAsync();
         }
     }
 }

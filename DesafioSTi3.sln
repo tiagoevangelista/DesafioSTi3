@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioSTi3.Domain", "DesafioSTi3.Domain\DesafioSTi3.Domain.csproj", "{2C8AC1C4-A7FF-446C-A3CB-0FF859883085}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioSTi3.Domain", "DesafioSTi3.Domain\DesafioSTi3.Domain.csproj", "{2C8AC1C4-A7FF-446C-A3CB-0FF859883085}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioSti3.Application", "DesafioSti3.Application\DesafioSti3.Application.csproj", "{575749EE-7E48-4E3C-A21B-216162B05546}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioSti3.Application", "DesafioSti3.Application\DesafioSti3.Application.csproj", "{575749EE-7E48-4E3C-A21B-216162B05546}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioSti3.Infrastructure", "DesafioSti3.Infrastructure\DesafioSti3.Infrastructure.csproj", "{55A01543-82F0-425D-B187-84477BEF73A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioSti3.Infrastructure", "DesafioSti3.Infrastructure\DesafioSti3.Infrastructure.csproj", "{55A01543-82F0-425D-B187-84477BEF73A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioSTi3.API", "DesafioSTi3.API\DesafioSTi3.API.csproj", "{29DF65D2-78E4-4E5D-89F2-CDE24FB2DE1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioSTi3.API", "DesafioSTi3.API\DesafioSTi3.API.csproj", "{29DF65D2-78E4-4E5D-89F2-CDE24FB2DE1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

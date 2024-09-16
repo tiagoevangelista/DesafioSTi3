@@ -1,4 +1,5 @@
-﻿using DesafioSti3.Application.Interfaces;
+﻿using DesafioSti3.Application.DTOs.Consulta;
+using DesafioSti3.Application.Interfaces;
 using DesafioSti3.Application.Services;
 using DesafioSTi3.Domain.Entities;
 using System;
@@ -17,12 +18,9 @@ namespace DesafioSti3.Infrastructure.Services
         {
             _pedidoRepository = pedidoRepository;
         }
-
         public async Task<Pedido> ProcessarPedido(Pedido pedido)
         {
-            //var valorFinal = pedido.Itens.Sum(pedido => pedido.PrecoFinal);
-            //pedido.ValorFinal = valorFinal;
-
+            pedido.RegraDeDesconto();
             return await _pedidoRepository.AdicionarPedido(pedido);
         }
 
@@ -37,7 +35,7 @@ namespace DesafioSti3.Infrastructure.Services
         }
 
         public async Task<Pedido> AdicionarPedido(Pedido pedido)
-        {
+        {   
             return await _pedidoRepository.AdicionarPedido(pedido);
         }
 

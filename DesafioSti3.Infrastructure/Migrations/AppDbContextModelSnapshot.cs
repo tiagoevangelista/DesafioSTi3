@@ -57,8 +57,9 @@ namespace DesafioSti3.Infrastructure.Migrations
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Quantidade")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("PedidoIdentificador", "ProdutoId");
 
@@ -120,9 +121,9 @@ namespace DesafioSti3.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("DesafioSTi3.Domain.Entities.Produto", "Produto")
-                        .WithMany("ItensPedido")
+                        .WithMany()
                         .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Pedido");
@@ -149,11 +150,6 @@ namespace DesafioSti3.Infrastructure.Migrations
             modelBuilder.Entity("DesafioSTi3.Domain.Entities.Pedido", b =>
                 {
                     b.Navigation("Itens");
-                });
-
-            modelBuilder.Entity("DesafioSTi3.Domain.Entities.Produto", b =>
-                {
-                    b.Navigation("ItensPedido");
                 });
 #pragma warning restore 612, 618
         }

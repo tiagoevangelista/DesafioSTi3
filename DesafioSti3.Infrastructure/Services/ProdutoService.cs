@@ -1,4 +1,5 @@
-﻿using DesafioSti3.Application.Interfaces;
+﻿using DesafioSti3.Application.DTOs.Criacao;
+using DesafioSti3.Application.Interfaces;
 using DesafioSti3.Application.Services;
 using DesafioSTi3.Domain.Entities;
 using System;
@@ -28,7 +29,7 @@ namespace DesafioSti3.Infrastructure.Services
             return await _produtoRepository.BuscarProdutoPorId(id);
         }
 
-        public async Task<Produto> AdicionarProduto(Produto produto)
+        public async Task<Produto> AdicionarProduto(ProdutoCriacaoDto produto)
         {
             return await _produtoRepository.AdicionarProduto(produto);
         }

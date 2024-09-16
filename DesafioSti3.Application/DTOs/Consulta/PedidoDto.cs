@@ -3,15 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace DesafioSti3.Application.DTOs
+namespace DesafioSti3.Application.DTOs.Consulta
 {
-    internal class PedidoProcessamentoDto
+    public class PedidoDto
     {
         public Guid Identificador { get; set; }
         public DateTime DataVenda { get; set; }
-        public ClienteProcessamentoDto Cliente { get; set; }
-        public ICollection<ItemPedido> Itens { get; set; }
+
+        public Cliente Cliente { get; set; }
+
+        public ICollection<ItemPedidoDto> Itens { get; set; }
     }
 }
