@@ -78,7 +78,7 @@ namespace DesafioSTi3.API.Controllers
                 DataVenda = DateTime.UtcNow.ToLocalTime(),
                 Cliente = await _clienteService.BuscarClientePorId(pedidoDto.Cliente.Id),
                 Itens = listaItens,
-                ValorFinal = pedidoDto.Itens.Sum(item => item.PrecoUnitario * item.Quantidade),
+                SubTotal = pedidoDto.Itens.Sum(item => item.PrecoUnitario * item.Quantidade),
             };
 
             await _pedidoService.AdicionarPedido(pedido);

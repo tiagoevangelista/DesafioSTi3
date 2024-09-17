@@ -28,7 +28,9 @@ namespace DesafioSti3.Infrastructure
             {
                 entity.HasKey(e => e.Identificador);
 
-                entity.Property(e => e.ValorFinal).HasPrecision(10, 2);
+                entity.Property(e => e.ValorTotal).HasPrecision(10, 2);
+                entity.Property(e => e.Descontos).HasPrecision(10, 2);
+                entity.Property(e => e.SubTotal).HasPrecision(10, 2);
 
                 entity.HasOne(e => e.Cliente)
                     .WithMany(e => e.Pedidos)

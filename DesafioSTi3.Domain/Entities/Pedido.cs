@@ -13,31 +13,33 @@ namespace DesafioSTi3.Domain.Entities
     {
         public Guid Identificador { get; set; }
         public  DateTime DataVenda { get; set; }
-        
-        public Cliente Cliente { get; set; }
-        
+
         [JsonIgnore]
         public Guid ClienteId { get; set; }
-        public decimal ValorFinal { get; set; }
+        public Cliente Cliente { get; set; }
         
         public ICollection<ItemPedido> Itens { get; set; }
 
+        public decimal SubTotal { get; set; }
+        public decimal Descontos { get; set; }
+        public decimal ValorTotal { get; set; }
+
         public void RegraDeDesconto()
         {
-            decimal ValorParcial = Itens.Sum(item => item.PrecoUnitario * item.Quantidade);
-
             switch (Cliente.Categoria)
             {
-                case CategoriaCliente.REGULAR when ValorParcial > (decimal)500.00:
-                    ValorFinal = ValorParcial - (decimal)0.05 * ValorParcial;
+                case CategoriaCliente.REGULAR when SubTotal > (decimal)500.00:
+                    Descontos = (decimal)0.05 * SubTotal;
                     break;
-                case CategoriaCliente.PREMIUM when ValorParcial > (decimal)300.00:
-                    ValorFinal = ValorParcial - (decimal)0.10 * ValorParcial;
+                case CategoriaCliente.PREMIUM when SubTotal > (decimal)300.00:
+                    Descontos = (decimal)0.10 * SubTotal;
                     break;
                 case CategoriaCliente.VIP:
-                    ValorFinal = ValorParcial - (decimal)0.15 * ValorParcial;
+                    Descontos = (decimal)0.15 * SubTotal;
                     break;
             }
+
+            ValorTotal = SubTotal - Descontos;
         }
     }
 

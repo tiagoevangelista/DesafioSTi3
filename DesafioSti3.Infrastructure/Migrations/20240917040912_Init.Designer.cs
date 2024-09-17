@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DesafioSti3.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240916220307_Init")]
+    [Migration("20240917040912_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -83,7 +83,15 @@ namespace DesafioSti3.Infrastructure.Migrations
                     b.Property<DateTime>("DataVenda")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("ValorFinal")
+                    b.Property<decimal>("Descontos")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("ValorTotal")
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 

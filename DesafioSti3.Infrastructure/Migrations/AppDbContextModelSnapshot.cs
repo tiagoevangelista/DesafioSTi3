@@ -80,7 +80,15 @@ namespace DesafioSti3.Infrastructure.Migrations
                     b.Property<DateTime>("DataVenda")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("ValorFinal")
+                    b.Property<decimal>("Descontos")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("ValorTotal")
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
