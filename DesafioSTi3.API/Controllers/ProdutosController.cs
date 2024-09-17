@@ -10,14 +10,14 @@ namespace DesafioSTi3.API.Controllers
     [ApiController]
     public class ProdutosController(IProdutoService _produtoService) : ControllerBase
     {
-        [HttpPost("AdicionarPedido")]
-        public async Task<ActionResult> AdicionarPedido(ProdutoCriacaoDto produto)
+        [HttpPost("AdicionarProduto")]
+        public async Task<ActionResult> AdicionarProduto(ProdutoCriacaoDto produtoDto)
         {
-            await _produtoService.AdicionarProduto(produto);
+            var produto = await _produtoService.AdicionarProduto(produtoDto);
             return Ok(produto);
         }
 
-        [HttpGet("ListarPedidos")]
+        [HttpGet("ListarProdutos")]
         public async Task<ActionResult<List<Produto>>> ListarProdutos()
         {
             var produtos = await _produtoService.ListarProdutos();

@@ -24,7 +24,7 @@ namespace DesafioSTi3.API.Controllers
         }
 
         [HttpPost("AdicionarCliente")]
-        public async Task<ActionResult<Cliente>> PostCliente(ClienteCriacaoDto clienteDto)
+        public async Task<ActionResult<Cliente>> AdicionarCliente(ClienteCriacaoDto clienteDto)
         {
             var cliente = new Cliente()
             {

@@ -81,9 +81,9 @@ namespace DesafioSTi3.API.Controllers
                 SubTotal = pedidoDto.Itens.Sum(item => item.PrecoUnitario * item.Quantidade),
             };
 
-            await _pedidoService.AdicionarPedido(pedido);
+            pedido = await _pedidoService.AdicionarPedido(pedido);
 
-            return Ok(pedidoDto);
+            return Ok(pedido);
         }
 
         [HttpPost("ProcessarPedido")]
