@@ -16,6 +16,6 @@ namespace DesafioSti3.Application.Services
         Task AtualizarPedido(Pedido pedido);
         Task RemoverPedido(Guid id);
 
-        Task<Pedido> ProcessarPedido(Pedido pedido);
+        Task<Pedido> ProcessarPedido(Guid id);
     }
 }

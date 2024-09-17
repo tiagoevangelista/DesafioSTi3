@@ -37,6 +37,8 @@ builder.Services.AddHangfire((serviceProvider, config) =>
 
 builder.Services.AddHangfireServer();
 
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -52,7 +54,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//Habilita um dashboard pra acompanhamento dos Jobs
 app.UseHangfireDashboard("/agendamentos", new DashboardOptions
 {
     DashboardTitle = "Dashboard dos Jobs da Aplicação",

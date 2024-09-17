@@ -1,27 +1,61 @@
 ﻿using DesafioSti3.Application.DTOs.Consulta;
+using DesafioSti3.Application.DTOs.Faturamento;
 using DesafioSti3.Application.Interfaces;
 using DesafioSti3.Application.Services;
 using DesafioSTi3.Domain.Entities;
+using Hangfire;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DesafioSti3.Infrastructure.Services
 {
-    public class PedidoService : IPedidoService
+    public class PedidoService(IPedidoRepository _pedidoRepository, HttpClient _httpClient) : IPedidoService
     {
-        private readonly IPedidoRepository _pedidoRepository;
+        public async Task<Pedido> ProcessarPedido(Guid id)
+        {
+            var pedido = await _pedidoRepository.BuscarPedidoPorId(id);
 
-        public PedidoService(IPedidoRepository pedidoRepository)
-        {
-            _pedidoRepository = pedidoRepository;
-        }
-        public async Task<Pedido> ProcessarPedido(Pedido pedido)
-        {
-            pedido.RegraDeDesconto();
-            return await _pedidoRepository.AdicionarPedido(pedido);
+            if (pedido == null)
+                throw new ArgumentException(message: "Nenhum pedido localizado!");
+
+            var sumarioPedido = new SumarioPedidoDto()
+            {
+                Identificador = pedido.Identificador,
+                SubTotal = pedido.SubTotal,
+                Descontos = pedido.Descontos,
+                ValorTotal = pedido.ValorTotal,
+                Itens = pedido.Itens.Select(item => new SumarioItemPedidoDto()
+                {
+                    Quantidade = item.Quantidade,
+                    PrecoUnitario = item.PrecoUnitario,
+                }).ToList()
+            };
+
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://sti3-faturamento.azurewebsites.net/api/vendas");
+            request.Headers.Add("email", "tiagoefreires@gmail.com");
+            request.Content = JsonContent.Create(sumarioPedido);
+
+            var response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                BackgroundJob.Schedule(() => ProcessarPedido(id), DateTime.UtcNow.AddSeconds(15));
+            }
+
+            //if (DateTime.UtcNow.Minute < 09)
+            //{
+            //    Console.WriteLine(DateTime.UtcNow.Minute);
+            //    BackgroundJob.Schedule(() => ProcessarPedido(id), DateTime.UtcNow.AddSeconds(5));
+            //}
+
+            Console.WriteLine(response);
+            return pedido;
+
         }
 
         public async Task<IEnumerable<PedidoDto>> ListarPedidos ()

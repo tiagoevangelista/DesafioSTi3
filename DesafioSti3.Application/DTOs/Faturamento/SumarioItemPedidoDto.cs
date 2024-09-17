@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DesafioSti3.Application.DTOs.Processamento
+namespace DesafioSti3.Application.DTOs.Faturamento
 {
-    public class ItemPedidoPrcocessamentoDto
+    public class SumarioItemPedidoDto
     {
-        public int ProdutoId { get; set; }
-        public string Descricao { get; set; }
         public decimal Quantidade { get; set; }
         public decimal PrecoUnitario { get; set; }
     }

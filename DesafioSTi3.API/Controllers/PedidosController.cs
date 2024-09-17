@@ -82,13 +82,10 @@ namespace DesafioSTi3.API.Controllers
 
             pedido = await _pedidoService.AdicionarPedido(pedido);
 
-            return Ok(pedido);
-        }
+            if (pedido != null)
+                await _pedidoService.ProcessarPedido(pedido.Identificador);
 
-        [HttpPost("ProcessarPedido")]
-        public async Task<ActionResult> ProcessarPedido(PedidoDto pedidoDto)
-        {
-            return BadRequest();
+            return Ok(pedido);
         }
     }
 }
