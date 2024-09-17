@@ -24,9 +24,24 @@ namespace DesafioSti3.Infrastructure.Services
             return await _pedidoRepository.AdicionarPedido(pedido);
         }
 
-        public async Task<IEnumerable<Pedido>> ListarPedidos ()
+        public async Task<IEnumerable<PedidoDto>> ListarPedidos ()
         {
-            return await _pedidoRepository.ListarPedidos();
+            var pedidos = await _pedidoRepository.ListarPedidos();
+            var pedidosDto = pedidos.Select(pedido => new PedidoDto
+            {
+                Identificador = pedido.Identificador,
+                DataVenda = pedido.DataVenda,
+                Cliente = pedido.Cliente,
+                Itens = pedido.Itens.Select(item => new ItemPedidoDto
+                    { 
+                        ProdutoId = item.ProdutoId,
+                        Descricao = item.Produto.Descricao,
+                        Quantidade = item.Quantidade,
+                        PrecoUnitario = item.PrecoUnitario
+                    }).ToList()
+            }).ToList();
+
+            return pedidosDto;
         }
 
         public async Task<Pedido> BuscarPedidoPorId(Guid id)

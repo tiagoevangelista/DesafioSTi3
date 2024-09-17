@@ -49,8 +49,9 @@ namespace DesafioSti3.Infrastructure.Repositories
         public async Task<IEnumerable<Pedido>> ListarPedidos()
         {
             return await _context.Pedidos
-                .Include(pedido => pedido.Itens)
                 .Include(pedido => pedido.Cliente)
+                .Include(pedido => pedido.Itens)
+                .ThenInclude(itens => itens.Produto)
                 .AsNoTracking()
                 .ToListAsync();
         }

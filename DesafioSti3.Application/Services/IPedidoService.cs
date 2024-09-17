@@ -10,7 +10,7 @@ namespace DesafioSti3.Application.Services
 {
     public interface IPedidoService
     {
-        Task<IEnumerable<Pedido>> ListarPedidos();
+        Task<IEnumerable<PedidoDto>> ListarPedidos();
         Task<Pedido> BuscarPedidoPorId(Guid id);
         Task<Pedido> AdicionarPedido(Pedido pedido);
         Task AtualizarPedido(Pedido pedido);

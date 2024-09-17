@@ -18,7 +18,7 @@ namespace DesafioSTi3.API.Controllers
     {
 
         [HttpGet("ListarPedidos")]
-        public async Task<ActionResult<List<PedidoDto>>> ListarPedidos()
+        public async Task<ActionResult<List<Pedido>>> ListarPedidos()
         {
             var produtos = await _pedidoService.ListarPedidos();
             return Ok(produtos);
@@ -59,14 +59,13 @@ namespace DesafioSTi3.API.Controllers
         public async Task<ActionResult<Pedido>> AdicionarPedido(PedidoCriacaoDto pedidoDto)
         {
             var listaItens = new List<ItemPedido>();
-            
+
             foreach (var item in pedidoDto.Itens)
             {
-                var produtoAtual = await _produtoService.BuscarProdutoPorId(item.ProdutoId);
                 var pedidoItem = new ItemPedido()
                 {
                     ProdutoId = item.ProdutoId,
-                    Produto = produtoAtual,
+                    Produto = await _produtoService.BuscarProdutoPorId(item.ProdutoId),
                     Quantidade = item.Quantidade,
                     PrecoUnitario = item.PrecoUnitario,
                 };
