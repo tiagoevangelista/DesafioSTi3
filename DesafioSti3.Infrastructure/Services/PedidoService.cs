@@ -35,7 +35,8 @@ namespace DesafioSti3.Infrastructure.Services
         }
 
         public async Task<Pedido> AdicionarPedido(Pedido pedido)
-        {   
+        {
+            pedido.RegraDeDesconto();
             return await _pedidoRepository.AdicionarPedido(pedido);
         }
 

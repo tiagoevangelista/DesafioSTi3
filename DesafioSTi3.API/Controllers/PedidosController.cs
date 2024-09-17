@@ -81,15 +81,14 @@ namespace DesafioSTi3.API.Controllers
                 ValorFinal = pedidoDto.Itens.Sum(item => item.PrecoUnitario * item.Quantidade),
             };
 
-            await _pedidoService.ProcessarPedido(pedido);
+            await _pedidoService.AdicionarPedido(pedido);
 
             return Ok(pedidoDto);
         }
 
         [HttpPost("ProcessarPedido")]
-        public async Task<ActionResult> ProcessarPedido()
+        public async Task<ActionResult> ProcessarPedido(PedidoDto pedidoDto)
         {
-            // TODO - Vou fazer depois de concluir todos os outros redondinho
             return BadRequest();
         }
     }

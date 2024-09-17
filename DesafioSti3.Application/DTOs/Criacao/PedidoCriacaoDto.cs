@@ -10,7 +10,6 @@ namespace DesafioSti3.Application.DTOs.Criacao
 {
     public class PedidoCriacaoDto
     {
-        public DateTime DataVenda { get; set; }
         public ClienteDto Cliente { get; set; }
         public ICollection<ItemPedidoDto> Itens { get; set; }
     }
